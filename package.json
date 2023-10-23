@@ -9,6 +9,10 @@
     "lint": "next lint",
     "new-component": "new-component"
   },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true
+  },
   "dependencies": {
     "bright": "0.8.4",
     "clsx": "1.2.1",
