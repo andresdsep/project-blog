@@ -4,11 +4,12 @@ import SliderControl from '@/components/SliderControl';
 import { range } from '@/utils';
 import clsx from 'clsx';
 import { LayoutGroup, motion } from 'framer-motion';
-import React from 'react';
+import React, { useId } from 'react';
 import styles from './DivisionGroupsDemo.module.css';
 import Equation from './Equation';
 
 function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRemainderArea }) {
+  const id = useId();
   const [numOfGroups, setNumOfGroups] = React.useState(initialNumOfGroups);
 
   const numOfItemsPerGroup = Math.floor(numOfItems / numOfGroups);
@@ -47,8 +48,8 @@ function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRe
             {range(numOfGroups).map((groupIndex) => (
               <div key={groupIndex} className={styles.group}>
                 {range(numOfItemsPerGroup).map((index) => {
-                  const layoutId = `circle-${
-                    (groupIndex * numOfItemsPerGroup) + (index % numOfItemsPerGroup)
+                  const layoutId = `${id}-${
+                    groupIndex * numOfItemsPerGroup + (index % numOfItemsPerGroup)
                   }`;
                   return <motion.div layoutId={layoutId} key={layoutId} className={styles.item} />;
                 })}
@@ -56,17 +57,18 @@ function DivisionGroupsDemo({ numOfItems = 12, initialNumOfGroups = 1, includeRe
             ))}
           </div>
         </div>
+
+        {includeRemainderArea && (
+          <div className={styles.remainderArea}>
+            <p className={styles.remainderHeading}>Remainder Area</p>
+
+            {range(remainder).map((index) => {
+              const layoutId = `${id}-${numOfItems - index - 1}`;
+              return <motion.div layoutId={layoutId} key={layoutId} className={styles.item} />;
+            })}
+          </div>
+        )}
       </LayoutGroup>
-
-      {includeRemainderArea && (
-        <div className={styles.remainderArea}>
-          <p className={styles.remainderHeading}>Remainder Area</p>
-
-          {range(remainder).map((index) => {
-            return <div key={index} className={styles.item} />;
-          })}
-        </div>
-      )}
 
       <Equation dividend={numOfItems} divisor={numOfGroups} remainder={remainder} />
     </Card>
