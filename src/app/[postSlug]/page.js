@@ -1,6 +1,7 @@
 import BlogHero from '@/components/BlogHero';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import dynamic from 'next/dynamic';
+import CircularColorsDemo from '../../components/CircularColorsDemo';
 import CodeSnippet from '../../components/CodeSnippet';
 import Spinner from '../../components/Spinner';
 import { loadBlogPost } from '../../helpers/file-helpers';
@@ -30,7 +31,10 @@ async function BlogPost({ params: { postSlug } }) {
     <article className={styles.wrapper}>
       <BlogHero title={title} publishedOn={publishedOn} />
       <div className={styles.page}>
-        <MDXRemote source={content} components={{ pre: CodeSnippet, DivisionGroupsDemo }} />
+        <MDXRemote
+          source={content}
+          components={{ pre: CodeSnippet, DivisionGroupsDemo, CircularColorsDemo }}
+        />
       </div>
     </article>
   );
