@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import { DARK_TOKENS, LIGHT_TOKENS } from '@/constants';
 import clsx from 'clsx';
 import { Spline_Sans_Mono, Work_Sans } from 'next/font/google';
+import { cookies } from 'next/headers';
 import RespectMotionPreferences from '../components/RespectMotionPreferences';
 import './styles.css';
 
@@ -20,8 +21,7 @@ const monoFont = Spline_Sans_Mono({
 });
 
 function RootLayout({ children }) {
-  // TODO: Dynamic theme depending on user preference
-  const theme = 'light';
+  const theme = cookies().get('color-theme')?.value || 'light';
 
   return (
     <RespectMotionPreferences>
